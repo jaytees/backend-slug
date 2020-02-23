@@ -43,7 +43,9 @@ const usersRouter = require('./routes/users.route');
 //it will use the relevant file specified above
 // app.use('/exercises', exercisesRouter);
 app.use('/user', usersRouter);
+app.use('/user/signup', usersRouter);
 app.use('/user/login', usersRouter);
+app.use('/user/dashboard', usersRouter);
 // app.use('/proxy', highRouter);
 // app.use('/scrape', scrapeRouter);
 

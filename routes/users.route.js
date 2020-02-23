@@ -10,11 +10,12 @@
 
 const auth = require('../middleware/auth');
 
-//route POST /user
+//route POST /user/signup
 //desc register new user
 //acess public
-router.route('/').post((req, res) => {
-  const { username, email, password } = req.body;
+router.route('/signup').post((req, res) => {
+
+  const { username, email, password } = req.body.user;
 
   //validation
   if(!username || !email || !password){
@@ -63,9 +64,9 @@ router.route('/').post((req, res) => {
                     }
                   })
                 }
-              )
+              )//res.status(400).json({ msg: err.message})
             }) //then
-            .catch( err => console.log('bcrypt error', err ))
+            .catch( err => res.status(400).json({ msg: err.message }))
         })
       })
     }) //then
@@ -76,12 +77,11 @@ router.route('/').post((req, res) => {
 }); //post register
 
 
-
 //route POST /login
 //desc authenticate user
 //acess public
 router.route('/login').post((req, res) => {
-  const { username, password } = req.body;
+  const { username, password } = req.body.user;
 
   //validation
   if(!username || !password){
@@ -130,10 +130,10 @@ router.route('/login').post((req, res) => {
 }); // auth post
 
 
-//route GET /users/auth
+//route GET /user/dashboard
 //desc get user data, by sending token
 //access private
-router.route('/auth').get( auth, (req, res) => {
+router.route('/dashboard').get( auth, (req, res) => {
   User.findById( req.user.id )
     .select('-password')
     .then(user => res.json(user))
