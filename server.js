@@ -34,18 +34,25 @@ connection.once('open', () => {
 
 
 //require the route files
-// const exercisesRouter = require('./routes/exercises');
+
 const usersRouter = require('./routes/users.route');
-// const highRouter = require('./routes/high')
+const nytimesRouter = require('./routes/nytimes.route');
+const hsRouter = require('./routes/hs.route')
+const slamcityRouter = require('./routes/slamcity.route')
+const pandpRouter = require('./routes/pandp.route')
 // const scrapeRouter = require('./routes/scrape')
 
 //now when a user goes to url(endpoint below)
 //it will use the relevant file specified above
-// app.use('/exercises', exercisesRouter);
 app.use('/user', usersRouter);
-app.use('/user/signup', usersRouter);
-app.use('/user/login', usersRouter);
-app.use('/user/dashboard', usersRouter);
+
+app.use('/nytimes', nytimesRouter);
+
+app.use('/hs', hsRouter);
+
+app.use('/slamcity', slamcityRouter);
+
+app.use('/pandp', pandpRouter);
 // app.use('/proxy', highRouter);
 // app.use('/scrape', scrapeRouter);
 

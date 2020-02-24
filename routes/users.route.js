@@ -14,12 +14,12 @@ const auth = require('../middleware/auth');
 //desc register new user
 //acess public
 router.route('/signup').post((req, res) => {
-
-  const { username, email, password } = req.body.user;
+  // console.log(req.body);
+  const { username, email, password, preferences } = req.body.user;
 
   //validation
   if(!username || !email || !password){
-    return res.status(400).json({ msg: 'Please enter all fields'});
+    return res.json({ msg: 'Please enter all fields'});
   };
 
   //check for existing user
@@ -27,21 +27,22 @@ router.route('/signup').post((req, res) => {
     .then( user => {
 
       if(user && user.username === username) {
-            return res.status(400).json({ msg: 'Username already exists'})
+            return res.json({ msg: 'Username already exists'})
       } else if (user) {
-            return res.status(400).json({ msg: 'Email already exists'})
+            return res.json({ msg: 'Email already exists'})
       } //if
 
       const newUser = new User({
         username,
         email,
-        password
+        password,
+        preferences
       }); //new user
 
       //create salt & hash
       bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
-          if (err) throw err;
+        bcrypt.hash(newUser.password, salt, (e, hash) => {
+          if (e) throw e;
 
           newUser.password = hash;
 
@@ -54,23 +55,26 @@ router.route('/signup').post((req, res) => {
                 { id: user.id },
                 process.env.JWT_SECRET,
                 { expiresIn: 3600},
-                (err, token) => {
-                  if (err) throw err;
+                (error, token) => {
+                  if (error) throw error;
                   res.json({
                     token,
                     user: {
                       username: user.username,
-                      email: user.email
+                      email: user.email,
+                      preferences: user.preferences
                     }
                   })
                 }
               )//res.status(400).json({ msg: err.message})
             }) //then
-            .catch( err => res.status(400).json({ msg: err.message }))
+            .catch( err => res.json( {msg: err.message}))
+            // .catch( err => console.log(err.message))
+            // .catch( err => res.status(400).json(err.message))
         })
       })
     }) //then
-    .catch( err => console.log('save error', err))
+
 
 
 
@@ -113,17 +117,19 @@ router.route('/login').post((req, res) => {
                 token,
                 user: {
                   username: user.username,
-                  email: user.email
+                  email: user.email,
+                  preferences: user.preferences
                 }
               })
             }
           )
 
         }) //bcrypt then
-        .catch( err => console.log('bcrypt err', err))
+        .catch( err => { errors: {
+          msg: 'Token is not valid'
+        }} )
 
     }) //then
-    .catch( err => console.log('to then err', err ))
 
 
 
@@ -141,3 +147,43 @@ router.route('/dashboard').get( auth, (req, res) => {
 })
 
 module.exports = router;
+
+
+// {
+// 	"user": {
+// 	"username": "Jord",
+// 	"email": "jord@t.com",
+// 	"password": "chicken",
+// 	"preferences": {
+// 		"outlet": "High Snobiety",
+// 		"route": "/hs",
+// 		"categories": {
+// 			"category_name": "politics",
+// 			"category_url": "category/music/feed/"
+// 		}
+// 	}
+// 	}
+// }
+
+
+// {
+//   "token":,
+//   "user": {
+//     "username": "Test2",
+//     "email": "test2@t.com",
+//     "preferences": [
+//       {
+//         "_id": "5e5325af5b9a7402b6e53464",
+//         "outlet": "High Snobiety",
+//         "route": "/hs",
+//         "categories": [
+//           {
+//             "_id": "5e5325af5b9a7402b6e53465",
+//             "category_name": "music",
+//             "category_url": "category/music/feed/"
+//           }
+//         ]
+//       }
+//     ]
+//   }
+// }

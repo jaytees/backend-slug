@@ -22,27 +22,7 @@ const userSchema = new Schema({
       type: Date,
       default: Date.now
     },
-    preferences: [{
-      outlet: {
-        type: String,
-        required: false
-      },
-      route: {
-        type: String,
-        required: false
-      },
-      categories: [{
-        category_name: {
-          type: String,
-          required: false
-        },
-        category_url: {
-          type: String,
-          required: false
-        }
-      }]
-
-    }]
+    outlets: [{ type: Schema.Types.ObjectId, ref: 'Outlet' }]
 })
 
 const User = mongoose.model('User', userSchema);
