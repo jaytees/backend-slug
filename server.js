@@ -34,6 +34,8 @@ connection.once('open', () => {
 
 
 //require the route files
+const users2Router = require('./routes/users2.route');
+
 
 const outletRouter = require('./routes/outlet.route');
 const usersRouter = require('./routes/users.route');
@@ -46,6 +48,7 @@ const pandpRouter = require('./routes/pandp.route')
 //it will use the relevant file specified above
 app.use('/outlet', outletRouter);
 app.use('/user', usersRouter);
+app.use('/user2', users2Router);
 
 
 app.use('/nytimes', nytimesRouter);

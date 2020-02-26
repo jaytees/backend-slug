@@ -23,6 +23,7 @@ function auth(req, res, next){
 
     //add user from payload
     req.user = decoded;
+    // req.user.model = 
     next();
 
   } catch(e) {

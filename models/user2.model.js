@@ -22,29 +22,16 @@ const userSchema = new Schema({
       type: Date,
       default: Date.now
     },
-    preferences: [{
+    preferences: {
       outlet_name: {
-        type: String,
-        required: false
-      },
-      outlet_route: {
-        type: String,
-        required: false
-      },
-      categories: [{
         category_name: {
           type: String,
           required: false
         },
-        category_url: {
-          type: String,
-          required: false
-        }
-      }]
-
-    }]
+      }
+    }
 })
 
-const User = mongoose.model('User', userSchema);
+const User2 = mongoose.model('User2', userSchema);
 
-module.exports = User;
+module.exports = User2;

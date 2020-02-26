@@ -2,6 +2,7 @@
  const router = require('express').Router();
  // require the mongoose model
  let User = require('../models/user.model');
+ let Outlet = require('../models/outlet.model');
 
  const bcrypt = require('bcryptjs')
 
@@ -160,7 +161,49 @@ router.route('/login').post((req, res) => {
 
 
 
-}); // auth post
+}); // loginpost
+
+
+router.route('/outlets/update').post( auth, (req, res) => {
+    const { outlet_name } = req.body;
+    let categoryMatch = [];
+
+
+    // works returns whole nyT object
+    // Outlet.findOne({ outlet_name }, function (err, doc){
+    // // doc is a Document
+    //     // return doc;
+    //     for (let i = 0; i < req.body.categories.length; i++) {
+    //
+    //       categoryMatch.push(doc.categories.find( c => c.category_name === req.body.categories[i] ))
+    //
+    //       console.log(categoryMatch);  //works
+    //     };
+    //   });
+
+    // User.findById( req.user.id )
+    //   .then( user => {
+    //     console.log(user); user
+    //     // console.log(req.body);  body
+    //   })
+
+      // $set to stop overwriting
+    // User.update(
+    //     { _id: req.user.id },
+    //     { $addToSet: { categories: { $each: [ categoryMatch ] } } }
+    //    )
+    //     .then( user => {
+    //       res.json( user );
+    //     }) //then
+    //     .catch( err => res.json( {msg: err.message}))
+    //
+
+
+    // Outlet.$where('this.outlet_name === this.outlet_name').exec(callback)
+
+
+
+})
 
 
 //route GET /user/dashboard
