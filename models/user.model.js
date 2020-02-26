@@ -23,11 +23,11 @@ const userSchema = new Schema({
       default: Date.now
     },
     preferences: [{
-      outlet: {
+      outlet_name: {
         type: String,
         required: false
       },
-      route: {
+      outlet_route: {
         type: String,
         required: false
       },
@@ -39,7 +39,11 @@ const userSchema = new Schema({
         category_url: {
           type: String,
           required: false
-        }
+        },
+        component: {
+          type: String,
+          required: false
+        },
       }]
 
     }]

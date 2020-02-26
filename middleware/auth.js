@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken');
 //route('/auth').post( auth, (req, res)
 //token sent in header, with below reference
 function auth(req, res, next){
+  console.log('from auth',req.headers);
+
   const token = req.headers['x-auth-header'];
 
 

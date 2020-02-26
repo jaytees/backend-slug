@@ -27,3 +27,25 @@ const outletSchema = new Schema({
 const Outlet = mongoose.model('Outlet', outletSchema);
 
 module.exports = Outlet;
+
+
+  // {
+  //   "outlet_name": "New York Times",
+  //   "outlet_route": "http://localhost:5000/nytimes/",
+  //   "categories": [{
+  //     "category_name": "All",
+  //     "category_url": "http://localhost:5000/nytimes/all"
+  //     },
+  //     {
+  //     "category_name": "Tech",
+  //     "category_url": "http://localhost:5000/nytimes/tech"
+  //     },
+  //     {
+  //     "category_name": "Magazine",
+  //     "category_url": "http://localhost:5000/nytimes/magazine"
+  //     },
+  //     {
+  //     "category_name": "Business",
+  //     "category_url": "http://localhost:5000/nytimes/business"
+  //     }]
+  //   }

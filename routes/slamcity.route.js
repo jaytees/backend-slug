@@ -32,18 +32,26 @@ router.route('/all').get( (req, res) => {
               let htmlContent= result['content:encoded'];
               let $ = cheerio.load(htmlContent);
               //regex to split if multiple images
-              let img = $.html('img').split(/(?=<)/g)
+              // let img = $.html('img').split(/(?=<)/g)
+              // let img = $.html('img').match(/<img.*?src="(.*?)"/g)
+              let img = $('img').attr('src');
+              // let img = $.html('img')
+              // console.log('IMG src', img);
+
+
+
+
               // let p = $.html('p') //pulls out the raw html full paragraph
-              // console.log(img);
+              console.log(img);
 
               //create placeholder image
-              // const img = img.length ? {image: img[0]} : {} ;
+              img = img ? img : 'No Image';
               // ...img, //this in the object
 
               feed.push({
                     title: result.title,
                     content: result.contentSnippet,
-                    image: img[0],
+                    image: img,
                     category: result.categories[0],
                     link: result.link
                   })
@@ -83,19 +91,17 @@ router.route('/interviews').get( (req, res) => {
 
               let htmlContent= result['content:encoded'];
               let $ = cheerio.load(htmlContent);
-              //regex to split if multiple images
-              let img = $.html('img').split(/(?=<)/g)
-              // let p = $.html('p') //pulls out the raw html full paragraph
-              // console.log(img);
+
+              let img = $('img').attr('src');
+
 
               //create placeholder image
-              // const img = img.length ? {image: img[0]} : {} ;
-              // ...img, //this in the object
+              img = img ? img : 'No Image';
 
               feed.push({
                     title: result.title,
                     content: result.contentSnippet,
-                    image: img[0],
+                    image: img,
                     category: result.categories[0],
                     link: result.link
                   })

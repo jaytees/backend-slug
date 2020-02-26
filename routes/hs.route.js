@@ -32,15 +32,18 @@ router.route('/all').get( (req, res) => {
               let htmlContent= result['content:encoded'];
               let $ = cheerio.load(htmlContent);
               //regex to split if multiple images
-              let img = $.html('img').split(/(?=<)/g)
-              // let p = $.html('p') //pulls out the raw html full paragraph
-              // console.log(img);
+              let img = $('img').attr('src');
+
+              console.log(img);
+
+              //create placeholder image
+              img = img ? img : 'No Image';
 
 
               feed.push({
                     title: result.title,
                     content: result.contentSnippet,
-                    image: img[0],
+                    image: img,
                     category: result.categories[0],
                     link: result.link
                   })
@@ -80,15 +83,18 @@ router.route('/footwear').get( (req, res) => {
               let htmlContent= result['content:encoded'];
               let $ = cheerio.load(htmlContent);
               //regex to split if multiple images
-              let img = $.html('img').split(/(?=<)/g)
-              // let p = $.html('p') //pulls out the raw html full paragraph
-              // console.log(img);
+              let img = $('img').attr('src');
+
+              console.log(img);
+
+              //create placeholder image
+              img = img ? img : 'No Image';
 
 
               feed.push({
                     title: result.title,
                     content: result.contentSnippet,
-                    image: img[0],
+                    image: img,
                     category: result.categories[0],
                     link: result.link
                   })
@@ -128,15 +134,17 @@ router.route('/style').get( (req, res) => {
               let htmlContent= result['content:encoded'];
               let $ = cheerio.load(htmlContent);
               //regex to split if multiple images
-              let img = $.html('img').split(/(?=<)/g)
-              // let p = $.html('p') //pulls out the raw html full paragraph
-              // console.log(img);
+              let img = $('img').attr('src');
+
+
+              //create placeholder image
+              img = img ? img : 'No Image';
 
 
               feed.push({
                     title: result.title,
                     content: result.contentSnippet,
-                    image: img[0],
+                    image: img,
                     category: result.categories[0],
                     link: result.link
                   })

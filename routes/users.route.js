@@ -22,7 +22,7 @@ router.route('/signup').post((req, res) => {
     return res.json({ msg: 'Please enter all fields'});
   };
 
-  //check for existing user
+  //check for existing user, if false, create
   User.findOne({ email, username })
     .then( user => {
 
@@ -54,7 +54,7 @@ router.route('/signup').post((req, res) => {
               jwt.sign(
                 { id: user.id },
                 process.env.JWT_SECRET,
-                { expiresIn: 3600},
+                { expiresIn: 86400},
                 (error, token) => {
                   if (error) throw error;
                   res.json({
@@ -79,6 +79,33 @@ router.route('/signup').post((req, res) => {
 
 
 }); //post register
+
+//route POST /user/setup
+//desc setup user account prefs
+//acess private
+router.route('/setup').post( auth, (req, res) => {
+  // console.log('from /setup', req.body);
+  // console.log('from /setup', req.user);
+
+  const { preferences } = req.body;
+
+  // validation
+  if(!preferences){
+    return res.json({ msg: 'Please select some outlets'});
+  };
+
+
+
+  //updateOne //not add $set to stop overwriting
+  User.updateOne( { _id: req.user.id }, { preferences })
+    .then( user => {
+      res.json( { msg: 'Preferences added'});
+    }) //then
+    .catch( err => res.json( {msg: err.message}))
+
+
+
+}); //post setup
 
 
 //route POST /login
@@ -110,7 +137,7 @@ router.route('/login').post((req, res) => {
           jwt.sign(
             { id: user.id },
             process.env.JWT_SECRET,
-            { expiresIn: 3600},
+            { expiresIn: 86400},
             (err, token) => {
               if (err) throw err;
               res.json({

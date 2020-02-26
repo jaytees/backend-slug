@@ -35,28 +35,24 @@ connection.once('open', () => {
 
 //require the route files
 
+const outletRouter = require('./routes/outlet.route');
 const usersRouter = require('./routes/users.route');
 const nytimesRouter = require('./routes/nytimes.route');
 const hsRouter = require('./routes/hs.route')
 const slamcityRouter = require('./routes/slamcity.route')
 const pandpRouter = require('./routes/pandp.route')
-// const scrapeRouter = require('./routes/scrape')
 
 //now when a user goes to url(endpoint below)
 //it will use the relevant file specified above
+app.use('/outlet', outletRouter);
 app.use('/user', usersRouter);
 
+
 app.use('/nytimes', nytimesRouter);
-
 app.use('/hs', hsRouter);
-
 app.use('/slamcity', slamcityRouter);
-
 app.use('/pandp', pandpRouter);
-// app.use('/proxy', highRouter);
-// app.use('/scrape', scrapeRouter);
 
-//
 
 
 //starts the server listening on a certain port
