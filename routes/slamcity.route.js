@@ -42,7 +42,7 @@ router.route('/all').get( (req, res) => {
 
 
               // let p = $.html('p') //pulls out the raw html full paragraph
-              console.log(img);
+              // console.log(img);
 
               //create placeholder image
               img = img ? img : 'No Image';

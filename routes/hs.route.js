@@ -34,7 +34,7 @@ router.route('/all').get( (req, res) => {
               //regex to split if multiple images
               let img = $('img').attr('src');
 
-              console.log(img);
+              // console.log(img);
 
               //create placeholder image
               img = img ? img : 'No Image';
@@ -85,7 +85,7 @@ router.route('/footwear').get( (req, res) => {
               //regex to split if multiple images
               let img = $('img').attr('src');
 
-              console.log(img);
+              // console.log(img);
 
               //create placeholder image
               img = img ? img : 'No Image';

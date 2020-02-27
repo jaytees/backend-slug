@@ -106,4 +106,94 @@ router.route('/tech').get((req, res) => {
     .catch( err => console.log(err))
 }); //get
 
+//route Get /nytimes/magazins
+//desc gets magazine
+//acess public
+router.route('/magazine').get((req, res) => {
+  console.log('/magazine');
+
+  const endpoint = 'all/magazine.json'
+
+  axios.get( `${baseURL}${endpoint}${apiKey}`)
+    .then( response => {
+      console.log(response.data.results);
+      let results = response.data.results
+
+      let feed = [];
+
+        results.forEach( result => {
+
+
+          //check multimedia not null
+          //and get the medium sized thumbnail
+          if (result.multimedia) {
+
+            for (let i = 0; i < result.multimedia.length; i++) {
+
+              if (result.multimedia[i].format === "mediumThreeByTwo440") {
+
+                feed.push({
+                  title: result.title,
+                  content: result.abstract,
+                  category: result.section,
+                  image: result.multimedia[i].url,
+                  link: result.url
+                })
+
+              }
+            };
+
+          }
+        }); //forEach
+
+      res.json(feed)
+    })
+    .catch( err => console.log(err))
+}); //get
+
+//route Get /nytimes/business
+//desc gets magazine
+//acess public
+router.route('/business').get((req, res) => {
+  console.log('/business');
+
+  const endpoint = 'all/business.json'
+
+  axios.get( `${baseURL}${endpoint}${apiKey}`)
+    .then( response => {
+      console.log(response.data.results);
+      let results = response.data.results
+
+      let feed = [];
+
+        results.forEach( result => {
+
+
+          //check multimedia not null
+          //and get the medium sized thumbnail
+          if (result.multimedia) {
+
+            for (let i = 0; i < result.multimedia.length; i++) {
+
+              if (result.multimedia[i].format === "mediumThreeByTwo440") {
+
+                feed.push({
+                  title: result.title,
+                  content: result.abstract,
+                  category: result.section,
+                  image: result.multimedia[i].url,
+                  link: result.url
+                })
+
+              }
+            };
+
+          }
+        }); //forEach
+
+      res.json(feed)
+    })
+    .catch( err => console.log(err))
+}); //get
+
 module.exports = router;

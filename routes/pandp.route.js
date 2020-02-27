@@ -21,7 +21,7 @@ router.route('/all').get((req, res) => {
           let title = node.children[0].attribs['aria-label'];
           // console.log(title);
           let link = node.children[0].attribs['href'];
-          debugger;
+          // debugger;
 
           let image = node.children[0].children[0].attribs.src;
           // console.log(image);

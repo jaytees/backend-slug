@@ -22,14 +22,7 @@ const userSchema = new Schema({
       type: Date,
       default: Date.now
     },
-    preferences: {
-      outlet_name: {
-        category_name: {
-          type: String,
-          required: false
-        },
-      }
-    }
+    preferences: Schema.Types.Mixed,
 })
 
 const User2 = mongoose.model('User2', userSchema);
