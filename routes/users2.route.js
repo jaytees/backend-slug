@@ -166,18 +166,20 @@ router.route('/outlets/update').post( auth, (req, res) => {
     const {outlet_name, category_name, category_url, action}  = req.body.selections
     console.log(outlet_name, category_name, category_url, action);
 
-
     // Add or delete passed on action
     const operation = (action === 'add') ? '$set' : '$unset';
     const key = `preferences.${outlet_name}.${category_name}`;
-    User2.update(
+    User2.findOneAndUpdate(
       {_id: req.user.id},
-      { [operation]: { [key]: category_url  } }
+      { [operation]: { [key]: category_url  } },
+      { new: true }
     )
     .then( data => {
       console.log('DONE UPDATE', data);
-      res.json(data);
+      res.json( data );
     })
+
+
 
 
 })

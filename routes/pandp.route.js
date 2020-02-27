@@ -20,10 +20,10 @@ router.route('/all').get((req, res) => {
       $('.mega-feed-item.mega-feed-item--feature').map( (i, node) => {
           let title = node.children[0].attribs['aria-label'];
           // console.log(title);
-          let link = node.children[0].attribs['href'];
+          let link = `https://www.complex.com${node.children[0].attribs['href']}`;
           // debugger;
 
-          let image = node.children[0].children[0].attribs.src;
+          let image = "https://pbs.twimg.com/profile_images/755417835191623680/PEEosNS5_400x400.jpg";
           // console.log(image);
 
           feed.push({

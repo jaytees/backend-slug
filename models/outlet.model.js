@@ -12,6 +12,10 @@ const outletSchema = new Schema({
       required: true,
       unique: true
     },
+    thumbnail: {
+      type: String,
+      require: false
+    },
     categories: [{
         category_name: {
           type: String,
@@ -28,24 +32,17 @@ const Outlet = mongoose.model('Outlet', outletSchema);
 
 module.exports = Outlet;
 
+// thumbnail: {
+//   type: String,
+//   required: false
+// },
 
   // {
-  //   "outlet_name": "New York Times",
-  //   "outlet_route": "http://localhost:5000/nytimes/",
+  //   "outlet_name": "Pigeons and Planes",
+  //   "outlet_route": "http://localhost:5000/pandp/",
+  //   "thumbnail": "https://pbs.twimg.com/profile_images/755417835191623680/PEEosNS5_400x400.jpg",
   //   "categories": [{
   //     "category_name": "All",
-  //     "category_url": "http://localhost:5000/nytimes/all"
-  //     },
-  //     {
-  //     "category_name": "Tech",
-  //     "category_url": "http://localhost:5000/nytimes/tech"
-  //     },
-  //     {
-  //     "category_name": "Magazine",
-  //     "category_url": "http://localhost:5000/nytimes/magazine"
-  //     },
-  //     {
-  //     "category_name": "Business",
-  //     "category_url": "http://localhost:5000/nytimes/business"
+  //     "category_url": "http://localhost:5000/pandp/all"
   //     }]
   //   }

@@ -5,7 +5,7 @@ router.route('/create').post((req, res) => {
 
     // console.log(req);
 
-    const { outlet_name, outlet_route, categories } = req.body
+    const { outlet_name, outlet_route, categories, thumbnail } = req.body
 
     if( !outlet_name || !outlet_route){
       return res.json({ msg: 'Please enter all fields'})
@@ -21,6 +21,7 @@ router.route('/create').post((req, res) => {
         const newOutlet = new Outlet({
           outlet_name,
           outlet_route,
+          thumbnail,
           categories
         })// new outlet
 
@@ -30,6 +31,8 @@ router.route('/create').post((req, res) => {
           })
 
       })
+
+
 
 })
 
