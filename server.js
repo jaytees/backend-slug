@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-
 require('dotenv').config();
 
 //creates the express server on a specified port
@@ -18,10 +17,11 @@ app.use(express.json());
 
 //database uri - uniform resource identifier
 const uri = process.env.ATLAS_URI;
-// console.log('uri', uri);
+
 mongoose.connect( uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }, (err) => {
     // console.log('got error', err);
 } );
+
 
 
 //establishes connection to database
