@@ -21,7 +21,7 @@ router.route('/all').get((req, res) => {
   console.log('nyt/all');
 
   const endpoint = 'all/all.json'
-  console.log(`${baseURL}${endpoint}${apiKey}`);
+  // console.log(`${baseURL}${endpoint}${apiKey}`);
 
 
   axios.get( `${baseURL}${endpoint}${apiKey}`)
@@ -65,7 +65,7 @@ router.route('/all').get((req, res) => {
 //desc gets tech news
 //acess public
 router.route('/tech').get((req, res) => {
-  console.log('/tech');
+  // console.log('/tech');
 
   const endpoint = 'all/technology.json'
 
@@ -106,6 +106,7 @@ router.route('/tech').get((req, res) => {
     .catch( err => console.log(err))
 }); //get
 
+
 //route Get /nytimes/magazins
 //desc gets magazine
 //acess public
@@ -116,7 +117,7 @@ router.route('/magazine').get((req, res) => {
 
   axios.get( `${baseURL}${endpoint}${apiKey}`)
     .then( response => {
-      console.log(response.data.results);
+      // console.log(response.data.results);
       let results = response.data.results
 
       let feed = [];
@@ -151,6 +152,7 @@ router.route('/magazine').get((req, res) => {
     .catch( err => console.log(err))
 }); //get
 
+
 //route Get /nytimes/business
 //desc gets magazine
 //acess public
@@ -161,7 +163,7 @@ router.route('/business').get((req, res) => {
 
   axios.get( `${baseURL}${endpoint}${apiKey}`)
     .then( response => {
-      console.log(response.data.results);
+      // console.log(response.data.results);
       let results = response.data.results
 
       let feed = [];

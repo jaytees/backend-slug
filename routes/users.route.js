@@ -11,13 +11,13 @@
 
 const auth = require('../middleware/auth');
 
-//route POST /user/signup
-//desc register new user
-//acess public
+
+
 router.route('/signup').post((req, res) => {
-  // console.log(req.body);
+  // console.log(req.body.user.preferences);
   const { username, email, password, preferences } = req.body.user;
 
+  // console.log(preferences);
   //validation
   if(!username || !email || !password){
     return res.json({ msg: 'Please enter all fields'});
@@ -81,24 +81,24 @@ router.route('/signup').post((req, res) => {
 
 }); //post register
 
-//route POST /user/setup
-//desc setup user account prefs
-//acess private
+
+
 router.route('/setup').post( auth, (req, res) => {
-  // console.log('from /setup', req.body);
+  // console.log('from 2/setup', req.body.userPreferences);
   // console.log('from /setup', req.user);
 
-  const { preferences } = req.body;
+  // const { preferences } = req.body.userPreferences;
+
+  // console.log(preferences);
 
   // validation
-  if(!preferences){
+  if(!req.body.userPreferences){
     return res.json({ msg: 'Please select some outlets'});
   };
 
 
-
   //updateOne //not add $set to stop overwriting
-  User.updateOne( { _id: req.user.id }, { preferences })
+  User.updateOne( { _id: req.user.id }, {preferences: req.body.userPreferences } )
     .then( user => {
       res.json( { msg: 'Preferences added'});
     }) //then
@@ -108,10 +108,6 @@ router.route('/setup').post( auth, (req, res) => {
 
 }); //post setup
 
-
-//route POST /login
-//desc authenticate user
-//acess public
 router.route('/login').post((req, res) => {
   const { username, password } = req.body.user;
 
@@ -165,50 +161,31 @@ router.route('/login').post((req, res) => {
 
 
 router.route('/outlets/update').post( auth, (req, res) => {
-    const { outlet_name } = req.body;
-    let categoryMatch = [];
+    // console.log(req.body);
 
+    const {outlet_name, category_name, category_url, action}  = req.body.selections
+    // console.log(outlet_name, category_name, category_url, action);
 
-    // works returns whole nyT object
-    // Outlet.findOne({ outlet_name }, function (err, doc){
-    // // doc is a Document
-    //     // return doc;
-    //     for (let i = 0; i < req.body.categories.length; i++) {
-    //
-    //       categoryMatch.push(doc.categories.find( c => c.category_name === req.body.categories[i] ))
-    //
-    //       console.log(categoryMatch);  //works
-    //     };
-    //   });
+    // Add or delete passed on action
+    //syntax to return the document
+    const operation = (action === 'add') ? '$set' : '$unset';
+    const key = `preferences.${outlet_name}.${category_name}`;
+    User.findOneAndUpdate(
+      {_id: req.user.id},
+      { [operation]: { [key]: category_url  } },
+      { new: true }
+    )
+    .then( data => {
+      console.log('DONE UPDATE', data);
+      res.json( data );
+    })
 
-    // User.findById( req.user.id )
-    //   .then( user => {
-    //     console.log(user); user
-    //     // console.log(req.body);  body
-    //   })
-
-      // $set to stop overwriting
-    // User.update(
-    //     { _id: req.user.id },
-    //     { $addToSet: { categories: { $each: [ categoryMatch ] } } }
-    //    )
-    //     .then( user => {
-    //       res.json( user );
-    //     }) //then
-    //     .catch( err => res.json( {msg: err.message}))
-    //
-
-
-    // Outlet.$where('this.outlet_name === this.outlet_name').exec(callback)
 
 
 
 })
 
 
-//route GET /user/dashboard
-//desc get user data, by sending token
-//access private
 router.route('/dashboard').get( auth, (req, res) => {
   User.findById( req.user.id )
     .select('-password')
@@ -216,24 +193,11 @@ router.route('/dashboard').get( auth, (req, res) => {
     .catch( err => console.warn('auth route', err))
 })
 
+
 module.exports = router;
 
 
-// {
-// 	"user": {
-// 	"username": "Jord",
-// 	"email": "jord@t.com",
-// 	"password": "chicken",
-// 	"preferences": {
-// 		"outlet": "High Snobiety",
-// 		"route": "/hs",
-// 		"categories": {
-// 			"category_name": "politics",
-// 			"category_url": "category/music/feed/"
-// 		}
-// 	}
-// 	}
-// }
+
 
 
 // {
