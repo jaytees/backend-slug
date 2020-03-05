@@ -193,6 +193,12 @@ router.route('/dashboard').get( auth, (req, res) => {
     .catch( err => console.warn('auth route', err))
 })
 
+router.route('/index').get((req, res) => {
+  User.find( (err, results ) => {
+    res.json(results)
+  })
+})
+
 
 module.exports = router;
 

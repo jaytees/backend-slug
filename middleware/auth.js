@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 //route('/auth').post( auth, (req, res)
 //token sent in header, with below reference
 function auth(req, res, next){
-  console.log('from auth',req.headers);
+  // console.log('from auth',req.headers);
 
   const token = req.headers['x-auth-header'];
 
@@ -23,7 +23,7 @@ function auth(req, res, next){
 
     //add user from payload
     req.user = decoded;
-    // req.user.model = 
+    // req.user.model =
     next();
 
   } catch(e) {

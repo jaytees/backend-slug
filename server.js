@@ -44,7 +44,7 @@ const pandpRouter = require('./routes/pandp.route')
 //now when a user goes to url(endpoint below)
 //it will use the relevant file specified above
 app.use('/outlet', outletRouter);
-app.use('user', usersRouter);
+app.use('/user', usersRouter);
 
 
 app.use('/nytimes', nytimesRouter);
