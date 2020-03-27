@@ -11,20 +11,26 @@ const jwt = require("jsonwebtoken");
 
 const auth = require("../middleware/auth");
 
+//parse error messages into consistent format
+const errorHandler = error => {
+  let errors = {};
+
+  Object.keys(error).forEach(key => {
+    errors = { ...errors, [key]: error[key].message };
+  });
+
+  return errors;
+};
+
 router.route("/signup").post((req, res) => {
   const { username, email, password, preferences } = req.body.user;
-
-  //validation
-  if (!username || !email || !password) {
-    return res.json({ msg: "Please enter all fields" });
-  }
 
   //check for existing user, if false, create
   User.findOne({ email, username }).then(user => {
     if (user && user.username === username) {
-      return res.json({ msg: "Username already exists" });
+      return res.status(401).send({ msg: "Username already exists" });
     } else if (user) {
-      return res.json({ msg: "Email already exists" });
+      return res.status(401).send({ msg: "Email already exists" });
     } //if
 
     const newUser = new User({
@@ -61,11 +67,9 @@ router.route("/signup").post((req, res) => {
                   }
                 });
               }
-            ); //res.status(400).json({ msg: err.message})
+            );
           }) //then
-          .catch(err => res.json({ msg: err.message }));
-        // .catch( err => console.log(err.message))
-        // .catch( err => res.status(400).json(err.message))
+          .catch(err => res.status(401).send(errorHandler(err.errors)));
       });
     });
   }); //then
@@ -173,25 +177,3 @@ router.route("/index").get((req, res) => {
 });
 
 module.exports = router;
-
-// {
-//   "token":,
-//   "user": {
-//     "username": "Test2",
-//     "email": "test2@t.com",
-//     "preferences": [
-//       {
-//         "_id": "5e5325af5b9a7402b6e53464",
-//         "outlet": "High Snobiety",
-//         "route": "/hs",
-//         "categories": [
-//           {
-//             "_id": "5e5325af5b9a7402b6e53465",
-//             "category_name": "music",
-//             "category_url": "category/music/feed/"
-//           }
-//         ]
-//       }
-//     ]
-//   }
-// }
