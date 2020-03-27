@@ -13,11 +13,19 @@ const auth = require("../middleware/auth");
 
 //parse error messages into consistent format
 const errorHandler = error => {
-  let errors = {};
+  let errors = [];
 
-  Object.keys(error).forEach(key => {
-    errors = { ...errors, [key]: error[key].message };
-  });
+  if (error.code === 11000 && error.keyPattern.email) {
+    errors.push("Email already exists");
+  } else if (error.code === 11000 && error.keyPattern.username) {
+    errors.push("Username already exists");
+  } else {
+    let errorObject = error.errors;
+    //make an array of descriptive messages
+    Object.keys(errorObject).forEach(key => {
+      errors.push(errorObject[key].message);
+    });
+  }
 
   return errors;
 };
@@ -27,12 +35,6 @@ router.route("/signup").post((req, res) => {
 
   //check for existing user, if false, create
   User.findOne({ email, username }).then(user => {
-    if (user && user.username === username) {
-      return res.status(401).send({ msg: "Username already exists" });
-    } else if (user) {
-      return res.status(401).send({ msg: "Email already exists" });
-    } //if
-
     const newUser = new User({
       username,
       email,
@@ -69,7 +71,10 @@ router.route("/signup").post((req, res) => {
               }
             );
           }) //then
-          .catch(err => res.status(401).send(errorHandler(err.errors)));
+          // .catch(err => res.status(401).send(errorHandler(err.errors)));
+          .catch(err => {
+            res.json(errorHandler(err));
+          });
       });
     });
   }); //then

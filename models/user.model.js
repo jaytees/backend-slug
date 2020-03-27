@@ -7,19 +7,19 @@ mongoose.SchemaTypes.Email.defaults.message =
 const userSchema = new Schema({
   username: {
     type: String,
-    required: [true, "Please enter all fields"],
+    required: [true, "Please enter a username"],
     unique: true,
     trim: true,
     minlength: [3, "Username must be a minimum of 3 characters"]
   },
   email: {
     type: [mongoose.SchemaTypes.Email],
-    required: [true, "Please enter all fields"],
+    required: [true, "Please enter a email"],
     unique: true
   },
   password: {
     type: String,
-    required: [true, "Please enter all fields"]
+    required: [true, "Please enter a password"]
     // minlength: [6, "Password must be a minimum of 6 characters"]
   },
   register_date: {
