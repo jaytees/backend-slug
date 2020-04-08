@@ -71,10 +71,7 @@ router.route("/signup").post((req, res) => {
               }
             );
           }) //then
-          // .catch(err => res.status(401).send(errorHandler(err.errors)));
-          .catch(err => {
-            res.json(errorHandler(err));
-          });
+          .catch(err => res.status(401).send(errorHandler(err)));
       });
     });
   }); //then
